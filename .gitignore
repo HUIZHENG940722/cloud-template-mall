@@ -4,6 +4,7 @@
 */mvnw
 */mvnw.cmd
 */src/test
+*/target
 !.gitignore
 !pom.xml
 !*/src/main
