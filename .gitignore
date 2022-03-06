@@ -1,0 +1,10 @@
+.idea
+*/.mvn
+*/HELP.md
+*/mvnw
+*/mvnw.cmd
+*/src/test
+!.gitignore
+!pom.xml
+!*/src/main
+!*/pom.xml
