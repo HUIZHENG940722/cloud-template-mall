@@ -13,6 +13,7 @@
 
     <modules>
         <module>gateway-mall</module>
+        <module>oauth2-mall</module>
     </modules>
 
     <properties>
