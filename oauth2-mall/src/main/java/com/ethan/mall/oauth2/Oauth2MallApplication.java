@@ -11,5 +11,4 @@ public class Oauth2MallApplication {
     public static void main(String[] args) {
         SpringApplication.run(Oauth2MallApplication.class, args);
     }
-
 }
