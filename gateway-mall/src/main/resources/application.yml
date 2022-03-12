@@ -21,3 +21,9 @@ spring:
           uri: lb://oauth2-mall # 配置路劲
           predicates: # 谓词
             - Path=/oauth2-mall/**
+        - id: admin-mall
+          uri: lb://admin-mall
+          predicates:
+            - Path=/admin-mall/**
+          filters:
+            - StripPrefix=1

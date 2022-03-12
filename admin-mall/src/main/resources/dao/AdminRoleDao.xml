@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ethan.mall.admin.ums.dao.AdminRoleDao">
+    <select id="getRoleListByAdminId" resultType="com.ethan.mall.pojo.UmsRole"
+            resultMap="com.ethan.mall.dao.UmsRoleMapper.BaseResultMap">
+        select r.tenant_id tenant_id,
+               r.revision revision,
+               r.created_by created_by,
+               r.created_time created_time,
+               r.updated_by updated_by,
+               r.updated_time updated_time,
+               r.id id,
+               r.name name,
+               r.description description,
+               r.admin_count admin_count,
+               r.status status
+        from ums_admin_role_relation arr
+            left join ums_role r
+                on arr.role_id = r.id and arr.admin_id = #{adminId}
+    </select>
+</mapper>

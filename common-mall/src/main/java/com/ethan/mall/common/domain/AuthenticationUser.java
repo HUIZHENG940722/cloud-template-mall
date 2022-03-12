@@ -1,6 +1,7 @@
 package com.ethan.mall.common.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date 2022/3/12
  */
 @Data
+@NoArgsConstructor
 public class AuthenticationUser {
     private Long id;
     private String username;
