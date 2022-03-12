@@ -4,6 +4,7 @@ import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
 import com.ethan.mall.common.api.CommonData;
 import com.ethan.mall.common.domain.AuthenticationUser;
+import com.ethan.mall.common.domain.Oauth2Token;
 import com.ethan.mall.pojo.UmsAdmin;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +45,17 @@ public class AdminController {
             return CommonData.failed();
         }
         return CommonData.success(admin);
+    }
+
+    /**
+     * 登录获取token
+     * @param username
+     * @param password
+     * @return
+     */
+    @GetMapping(value = "/login")
+    public CommonData<Oauth2Token> login(@RequestParam(value = "username") String username,
+                                         @RequestParam(value = "password") String password) {
+        return adminService.login(username, password);
     }
 }

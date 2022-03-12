@@ -5,7 +5,10 @@ import cn.hutool.core.collection.CollUtil;
 import com.ethan.mall.admin.ums.dao.RoleDao;
 import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
+import com.ethan.mall.admin.ums.service.feign.AuthorizationService;
+import com.ethan.mall.common.api.CommonData;
 import com.ethan.mall.common.domain.AuthenticationUser;
+import com.ethan.mall.common.domain.Oauth2Token;
 import com.ethan.mall.common.exception.Asserts;
 import com.ethan.mall.dao.UmsAdminMapper;
 import com.ethan.mall.pojo.UmsAdmin;
@@ -14,9 +17,7 @@ import com.ethan.mall.pojo.UmsRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zhenghui
@@ -30,6 +31,8 @@ public class AdminServiceImpl implements AdminService {
     private UmsAdminMapper adminMapper;
     @Resource
     private RoleDao roleDao;
+    @Resource
+    private AuthorizationService authorizationService;
     @Override
     public AuthenticationUser loadUserByUsername(String username) {
         // 1 校验
@@ -90,5 +93,25 @@ public class AdminServiceImpl implements AdminService {
             return admin;
         }
         return null;
+    }
+
+    @Override
+    public CommonData<Oauth2Token> login(String username, String password) {
+        // 1 校验
+        // 2 执行逻辑
+        // 2.1 初始化数据
+        Map<String, String> params = new HashMap<>();
+        params.put("client_id", "admin-password");
+        params.put("client_secret", "123456");
+        params.put("grant_type", "password");
+        params.put("username", username);
+        params.put("password", password);
+        CommonData<Oauth2Token> accessToken = authorizationService.getAccessToken(params);
+        if (accessToken.getCode().equals("200") && accessToken.getData()!=null) {
+            // 更新登录时间
+            // 插入日志
+        }
+        // 3 返回结果集
+        return accessToken;
     }
 }

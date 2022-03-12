@@ -1,7 +1,9 @@
 package com.ethan.mall.admin.ums.service;
 
 import com.ethan.mall.admin.ums.param.AdminRegisterParam;
+import com.ethan.mall.common.api.CommonData;
 import com.ethan.mall.common.domain.AuthenticationUser;
+import com.ethan.mall.common.domain.Oauth2Token;
 import com.ethan.mall.pojo.UmsAdmin;
 
 /**
@@ -31,4 +33,12 @@ public interface AdminService {
      * @return
      */
     UmsAdmin register(AdminRegisterParam adminRegisterParam);
+
+    /**
+     * 登录获取token
+     * @param username
+     * @param password
+     * @return
+     */
+    CommonData<Oauth2Token> login(String username, String password);
 }

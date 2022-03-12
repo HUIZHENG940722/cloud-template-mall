@@ -2,7 +2,7 @@ package com.ethan.mall.oauth2.config;
 
 import com.ethan.mall.oauth2.service.impl.AuthorizationServiceImpl;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,6 +22,8 @@ import javax.annotation.Resource;
 public class AuthorizationServerConfig implements AuthorizationServerConfigurer {
     @Resource
     private AuthorizationServiceImpl authorizationService;
+    @Resource
+    private AuthenticationManager authenticationManager;
     /**
      * 配置授权服务器的安全性
      * @param security
@@ -29,6 +31,7 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.allowFormAuthenticationForClients();
     }
 
     /**
@@ -53,6 +56,7 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.userDetailsService(authorizationService);
+        endpoints.authenticationManager(authenticationManager)
+                .userDetailsService(authorizationService);
     }
 }
