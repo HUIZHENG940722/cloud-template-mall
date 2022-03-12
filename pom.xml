@@ -16,6 +16,8 @@
         <module>gateway-mall</module>
         <module>oauth2-mall</module>
         <module>common-mall</module>
+        <module>admin-mall</module>
+        <module>mybatis-mall</module>
     </modules>
 
     <properties>
@@ -25,6 +27,7 @@
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <hutool.version>5.4.0</hutool.version>
         <pagehelper.version>1.3.0</pagehelper.version>
+        <swaggerUI.version>2.9.2</swaggerUI.version>
     </properties>
 
     <dependencyManagement>
@@ -52,6 +55,17 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
+            </dependency>
+            <!--Swagger-UI API文档生产工具-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swaggerUI.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swaggerUI.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
