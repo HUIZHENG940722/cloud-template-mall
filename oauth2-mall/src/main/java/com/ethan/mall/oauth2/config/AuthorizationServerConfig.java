@@ -1,11 +1,15 @@
 package com.ethan.mall.oauth2.config;
 
+import com.ethan.mall.oauth2.service.impl.AuthorizationServiceImpl;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhenghui
@@ -16,7 +20,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig implements AuthorizationServerConfigurer {
-
+    @Resource
+    private AuthorizationServiceImpl authorizationService;
     /**
      * 配置授权服务器的安全性
      * @param security
@@ -48,6 +53,6 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
+        endpoints.userDetailsService(authorizationService);
     }
 }
