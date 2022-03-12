@@ -2,7 +2,7 @@ package com.ethan.mall.admin.ums.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import com.ethan.mall.admin.ums.dao.AdminRoleDao;
+import com.ethan.mall.admin.ums.dao.RoleDao;
 import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
 import com.ethan.mall.common.domain.AuthenticationUser;
@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private UmsAdminMapper adminMapper;
     @Resource
-    private AdminRoleDao adminRoleDao;
+    private RoleDao roleDao;
     @Override
     public AuthenticationUser loadUserByUsername(String username) {
         // 1 校验
@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
             return null;
         }
         // 2.2 根据后台用户id获取角色列表
-        List<UmsRole> roleListByAdminId = adminRoleDao.getRoleListByAdminId(byUsername.getId());
+        List<UmsRole> roleListByAdminId = roleDao.getRoleListByAdminId(byUsername.getId());
         List<String> roles = new ArrayList<>();
         roleListByAdminId.forEach(role -> roles.add(role.getName()));
         // 2.3 格式话数据

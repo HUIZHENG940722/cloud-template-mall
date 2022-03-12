@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ethan.mall.admin.ums.dao.AdminRoleDao">
+<mapper namespace="com.ethan.mall.admin.ums.dao.RoleDao">
     <select id="getRoleListByAdminId" resultType="com.ethan.mall.pojo.UmsRole"
             resultMap="com.ethan.mall.dao.UmsRoleMapper.BaseResultMap">
         select r.tenant_id tenant_id,

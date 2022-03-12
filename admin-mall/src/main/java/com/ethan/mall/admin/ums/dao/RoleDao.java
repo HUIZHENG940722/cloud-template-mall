@@ -11,6 +11,6 @@ import java.util.List;
  * @author zhenghui
  * @Date 2022/3/12
  */
-public interface AdminRoleDao {
+public interface RoleDao {
     List<UmsRole> getRoleListByAdminId(@Param(value = "adminId") Long adminId);
 }
