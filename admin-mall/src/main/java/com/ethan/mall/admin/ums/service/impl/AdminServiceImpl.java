@@ -1,9 +1,12 @@
 package com.ethan.mall.admin.ums.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.ethan.mall.admin.ums.dao.AdminRoleDao;
+import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
 import com.ethan.mall.common.domain.AuthenticationUser;
+import com.ethan.mall.common.exception.Asserts;
 import com.ethan.mall.dao.UmsAdminMapper;
 import com.ethan.mall.pojo.UmsAdmin;
 import com.ethan.mall.pojo.UmsAdminExample;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,6 +65,30 @@ public class AdminServiceImpl implements AdminService {
             return umsAdmins.get(0);
         }
         // 3 返回结果
+        return null;
+    }
+
+    @Override
+    public UmsAdmin register(AdminRegisterParam adminRegisterParam) {
+        // 1 校验
+        // 1.1 校验用户名是否存在
+        UmsAdminExample adminExample = new UmsAdminExample();
+        adminExample.createCriteria().andUsernameEqualTo(adminRegisterParam.getUsername());
+        List<UmsAdmin> umsAdmins = adminMapper.selectByExample(adminExample);
+        if (CollUtil.isNotEmpty(umsAdmins)) {
+            Asserts.fail("用户名已存在");
+        }
+        // 2 执行逻辑
+        // 2.1 初始化用户数据
+        UmsAdmin admin = new UmsAdmin();
+        BeanUtil.copyProperties(adminRegisterParam, admin);
+        admin.setCreatedTime(new Date());
+        // 2.2 插入用户数据
+        int i = adminMapper.insertSelective(admin);
+        // 3 返回结果
+        if (i>0) {
+            return admin;
+        }
         return null;
     }
 }

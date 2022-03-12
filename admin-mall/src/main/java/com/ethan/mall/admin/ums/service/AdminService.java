@@ -1,5 +1,6 @@
 package com.ethan.mall.admin.ums.service;
 
+import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.common.domain.AuthenticationUser;
 import com.ethan.mall.pojo.UmsAdmin;
 
@@ -23,4 +24,11 @@ public interface AdminService {
      * @return
      */
     UmsAdmin getByUsername(String username);
+
+    /**
+     * 注册后台用户
+     * @param adminRegisterParam
+     * @return
+     */
+    UmsAdmin register(AdminRegisterParam adminRegisterParam);
 }

@@ -1,10 +1,10 @@
 server:
   port: 9001
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 
 spring:
   application:
@@ -25,5 +25,3 @@ spring:
           uri: lb://admin-mall
           predicates:
             - Path=/admin-mall/**
-          filters:
-            - StripPrefix=1

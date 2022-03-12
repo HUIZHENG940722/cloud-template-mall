@@ -1,10 +1,11 @@
 package com.ethan.mall.admin.ums.controller;
 
+import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
+import com.ethan.mall.common.api.CommonData;
 import com.ethan.mall.common.domain.AuthenticationUser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ethan.mall.pojo.UmsAdmin;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -29,5 +30,19 @@ public class AdminController {
     public AuthenticationUser loadUserByUsername(String username) {
         AuthenticationUser authenticationUser = adminService.loadUserByUsername(username);
         return authenticationUser;
+    }
+
+    /**
+     * 注册用户
+     * @param adminRegisterParam
+     * @return
+     */
+    @PostMapping(value = "/register")
+    public CommonData<UmsAdmin> register(@RequestBody AdminRegisterParam adminRegisterParam) {
+        UmsAdmin admin = adminService.register(adminRegisterParam);
+        if (admin == null) {
+            return CommonData.failed();
+        }
+        return CommonData.success(admin);
     }
 }
