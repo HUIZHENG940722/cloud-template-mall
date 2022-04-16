@@ -27,7 +27,7 @@ public class AdminController {
      * @param username
      * @return
      */
-    @PostMapping(value = "/loadByUsername")
+    @GetMapping(value = "/loadByUsername")
     public AuthenticationUser loadUserByUsername(@RequestParam(value = "username") String username) {
         AuthenticationUser authenticationUser = adminService.loadUserByUsername(username);
         return authenticationUser;
