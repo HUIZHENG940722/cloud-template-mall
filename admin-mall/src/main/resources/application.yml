@@ -1,10 +1,16 @@
 server:
   port: 8080
 
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+
 mybatis:
   mapper-locations:
     - mapper/*.xml
     - dao/*.xml
+
 # 应用名称
 spring:
   application:
@@ -13,5 +19,11 @@ spring:
     url: jdbc:mysql://localhost:3306/mall?nullCatalogMeansCurrent=true&useUnicode=true&characterEncodeing=utf-8&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: ahui940722
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        server-addr: http://localhost:8848
+        file-extension: yaml
 

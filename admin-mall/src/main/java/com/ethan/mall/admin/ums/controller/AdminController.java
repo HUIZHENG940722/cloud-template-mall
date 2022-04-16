@@ -28,7 +28,7 @@ public class AdminController {
      * @return
      */
     @GetMapping(value = "/loadByUsername")
-    public AuthenticationUser loadUserByUsername(String username) {
+    public AuthenticationUser loadUserByUsername(@RequestParam(value = "username") String username) {
         AuthenticationUser authenticationUser = adminService.loadUserByUsername(username);
         return authenticationUser;
     }
@@ -53,7 +53,7 @@ public class AdminController {
      * @param password
      * @return
      */
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public CommonData<Oauth2Token> login(@RequestParam(value = "username") String username,
                                          @RequestParam(value = "password") String password) {
         return adminService.login(username, password);

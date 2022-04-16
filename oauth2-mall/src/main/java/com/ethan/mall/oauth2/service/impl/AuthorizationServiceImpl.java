@@ -20,9 +20,11 @@ import javax.annotation.Resource;
 public class AuthorizationServiceImpl implements UserDetailsService {
     @Resource
     private AdminService adminService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthenticationUser authenticationUser = adminService.loadUserByUsername(username);
-        return (AuthorizationUser) authenticationUser;
+        AuthorizationUser authorizationUser = new AuthorizationUser(authenticationUser);
+        return authorizationUser;
     }
 }

@@ -3,6 +3,7 @@ package com.ethan.mall.oauth2.config;
 import com.ethan.mall.oauth2.service.impl.AuthorizationServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,6 +25,8 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
     private AuthorizationServiceImpl authorizationService;
     @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private PasswordEncoder passwordEncoder;
     /**
      * 配置授权服务器的安全性
      * @param security
@@ -43,10 +46,11 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("admin-password")
-                .secret("123456")
+                .secret(passwordEncoder.encode("123456"))
                 .scopes("all")
                 .authorizedGrantTypes("password", "refresh_token")
-                .authorities();
+                .accessTokenValiditySeconds(3600)
+                .refreshTokenValiditySeconds(86400);
     }
 
     /**

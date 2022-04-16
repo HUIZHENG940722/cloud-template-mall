@@ -18,11 +18,27 @@ import java.util.stream.Collectors;
  */
 @Data
 @NoArgsConstructor
-public class AuthorizationUser extends AuthenticationUser implements UserDetails {
+public class AuthorizationUser implements UserDetails {
+    private AuthenticationUser authenticationUser;
+
+    public AuthorizationUser(AuthenticationUser authenticationUser) {
+        this.authenticationUser = authenticationUser;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.authenticationUser.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.authenticationUser.getUsername();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return this.authenticationUser.getRoles().stream().map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,6 +58,6 @@ public class AuthorizationUser extends AuthenticationUser implements UserDetails
 
     @Override
     public boolean isEnabled() {
-        return this.getStatus()==1;
+        return this.authenticationUser.getStatus()==1;
     }
 }

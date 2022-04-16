@@ -2,6 +2,7 @@ package com.ethan.mall.admin.ums.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.crypto.digest.BCrypt;
 import com.ethan.mall.admin.ums.dao.RoleDao;
 import com.ethan.mall.admin.ums.param.AdminRegisterParam;
 import com.ethan.mall.admin.ums.service.AdminService;
@@ -106,7 +107,7 @@ public class AdminServiceImpl implements AdminService {
         params.put("grant_type", "password");
         params.put("username", username);
         params.put("password", password);
-        CommonData<Oauth2Token> accessToken = authorizationService.getAccessToken(params);
+        CommonData<Oauth2Token> accessToken = authorizationService.postAccessToken(params);
         if (accessToken.getCode().equals("200") && accessToken.getData()!=null) {
             // 更新登录时间
             // 插入日志
