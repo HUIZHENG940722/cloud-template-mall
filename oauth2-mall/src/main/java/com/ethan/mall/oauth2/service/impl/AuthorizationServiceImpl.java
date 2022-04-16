@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author zhenghui
@@ -24,13 +25,17 @@ import javax.annotation.Resource;
 public class AuthorizationServiceImpl implements UserDetailsService {
     @Resource
     private AdminService adminService;
+    @Resource
+    private HttpServletRequest request;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthenticationUser authenticationUser = adminService.loadUserByUsername(username);
+        String clientId = request.getParameter("client_id");
         if (authenticationUser == null) {
             throw new UsernameNotFoundException("用户名或密码错误!");
         }
+        authenticationUser.setClientId(clientId);
         AuthorizationUser authorizationUser = new AuthorizationUser(authenticationUser);
         if (!authorizationUser.isEnabled()) {
             throw new DisabledException("该账户已被禁用，请联系管理员!");

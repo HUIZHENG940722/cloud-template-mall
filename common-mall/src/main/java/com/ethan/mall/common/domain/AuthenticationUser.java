@@ -21,4 +21,5 @@ public class AuthenticationUser {
     private String password;
     private List<String> roles;
     private int status;
+    private String clientId;
 }

@@ -1,5 +1,6 @@
 package com.ethan.mall.oauth2.config;
 
+import com.ethan.mall.oauth2.component.JwtTokenEnhancer;
 import com.ethan.mall.oauth2.service.impl.AuthorizationServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +11,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhenghui
@@ -29,6 +34,8 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
     private AuthenticationManager authenticationManager;
     @Resource
     private PasswordEncoder passwordEncoder;
+    @Resource
+    private JwtTokenEnhancer jwtTokenEnhancer;
     /**
      * 配置授权服务器的安全性
      * @param security
@@ -62,9 +69,14 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> delegates = new ArrayList<>();
+        delegates.add(jwtTokenEnhancer);
+        delegates.add(jwtAccessTokenConverter());
+        tokenEnhancerChain.setTokenEnhancers(delegates);
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(authorizationService)
-                .accessTokenConverter(jwtAccessTokenConverter());
+                .tokenEnhancer(tokenEnhancerChain);
     }
 
     @Bean
