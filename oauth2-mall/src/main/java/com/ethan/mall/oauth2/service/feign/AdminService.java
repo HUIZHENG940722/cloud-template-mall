@@ -3,7 +3,6 @@ package com.ethan.mall.oauth2.service.feign;
 import com.ethan.mall.common.domain.AuthenticationUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -14,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient("admin-mall")
 public interface AdminService {
-    @PostMapping(value = "/admin/loadByUsername")
+    @GetMapping(value = "/admin/loadByUsername")
     AuthenticationUser loadUserByUsername(@RequestParam(value = "username") String username);
 }
